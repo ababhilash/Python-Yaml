@@ -12,13 +12,15 @@ pipeline {
         }
         stage ("Dynamically write dictionary variables") {
             steps{
+                script{
                 def amap = ['something': 'my datas', 'size': 3, 'isEmpty': false]
                 writeYaml file: 'items.yaml', data: amap
                 def read = readYaml file: 'items.yaml'
-
+ 
                 assert read.something == 'my datas'
                 assert read.size == 3
                 assert read.isEmpty == false
+                }
             }
         }
         stage ("Print the contents of yaml file") {
