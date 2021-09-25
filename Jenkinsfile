@@ -10,7 +10,7 @@ pipeline {
             steps{
                 script{
                         def amap = ['veg': [ 'tomato': 2, 'potato': 2]]
-                        sh 'rm -rf datas.yaml'
+                        sh 'rm -rf datas.yaml' 
                         writeYaml file: 'datas.yaml', data: amap
                         def read = readYaml file: 'datas.yaml'
                         sh 'cat datas.yaml >> items.yaml'
