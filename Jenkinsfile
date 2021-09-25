@@ -1,7 +1,3 @@
-import org.yaml.snakeyaml.Yaml
-import org.yaml.snakeyaml.DumperOptions
-import static org.yaml.snakeyaml.DumperOptions.FlowStyle.BLOCK
-
 pipeline {
     agent any
     stages{
@@ -13,19 +9,17 @@ pipeline {
         stage ("Dynamically write dictionary variables") {
             steps{
                 script{
-                def amap = ['something': 'my datas', 'size': 3, 'isEmpty': false]
-                writeYaml file: 'items.yaml', data: amap
-                def read = readYaml file: 'items.yaml'
- 
-                assert read.something == 'my datas'
-                assert read.size == 3
-                assert read.isEmpty == false
+                        def amap = ['veg': [ 'tomato': 2, 'potato': 2]]
+                        sh 'rm -rf datas.yaml'
+                        writeYaml file: 'datas.yaml', data: amap
+                        def read = readYaml file: 'datas.yaml'
+                        sh 'cat datas.yaml >> items.yaml'
                 }
             }
         }
-        stage ("Print the contents of yaml file") {
+        stage ("Output of yaml file") {
             steps{
-                sh "python3 data.py"
+                sh "cat items.yaml"
             }    
         }    
     }
